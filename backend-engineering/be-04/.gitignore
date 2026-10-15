@@ -1,0 +1,9 @@
+venv/
+__pycache__/
+*.pyc
+.env
+.env.example
+
+# The database is generated on first run, so each clone starts fresh.
+tasks.db
+*.db-journal

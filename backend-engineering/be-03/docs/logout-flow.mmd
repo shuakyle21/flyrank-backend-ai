@@ -1,0 +1,35 @@
+---
+config:
+  theme: base
+  themeVariables:
+    background: "#fafafa"
+    primaryColor: "#dae8fc"
+    primaryTextColor: "#1a1a1a"
+    primaryBorderColor: "#6c8ebf"
+    lineColor: "#666666"
+    secondaryColor: "#fff2cc"
+    tertiaryColor: "#d5e8d4"
+    clusterBkg: "#f0f4f8"
+    clusterBorder: "#b0b0b0"
+    nodeBorder: "#888888"
+    defaultLinkColor: "#888888"
+---
+sequenceDiagram
+  title Logout flow with stateless token verification
+    participant C as Client
+    participant P as GET /protected/profile
+    participant L as POST /auth/logout
+    participant S as shared `supabase` client
+
+    Note over S: .auth session: empty (login never called set_session)
+
+    C->>P: Authorization: Bearer token
+    P->>S: get_user(token)  [token passed directly]
+    S-->>P: valid user (stateless check)
+    P-->>C: 200 OK
+
+    C->>L: Authorization: Bearer token
+    L->>S: get_access_token() verifies token, then discards it
+    L->>S: sign_out()  [no token arg - reads client session]
+    S-->>L: AuthSessionMissingError
+    L-->>C: 500 error

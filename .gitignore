@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.env/
+*.egg-info/
+dist/
+build/
+
+# Databases / local data
+*.db
+*.db-journal
+*.sqbpro
+data/output/
+data/cache/
+
+# Secrets — never commit real values
+.env
+!.env.example
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Docker
+.dockerignore

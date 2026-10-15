@@ -1,0 +1,32 @@
+---
+config:
+  theme: base
+  themeVariables:
+    background: "#fafafa"
+    primaryColor: "#dae8fc"
+    primaryTextColor: "#1a1a1a"
+    primaryBorderColor: "#6c8ebf"
+    lineColor: "#666666"
+    secondaryColor: "#fff2cc"
+    tertiaryColor: "#d5e8d4"
+    clusterBkg: "#f0f4f8"
+    clusterBorder: "#b0b0b0"
+    nodeBorder: "#888888"
+    defaultLinkColor: "#888888"
+---
+sequenceDiagram
+  title Login flow — stateless token issuance
+    participant C as Client
+    participant S as POST /auth/login (FastAPI)
+    participant B as Supabase
+
+    C->>S: POST /auth/login (email, password)
+    S->>B: sign_in_with_password(email, password)
+    B-->>S: 201 Created with {user, access_token, refresh_token, session}
+    S-->>C: 201 Created — return user + session (includes access_token)
+    Note over C: Client stores `access_token` (Bearer) and `refresh_token` securely
+    Note over S: Server does not persist session — verification is stateless via Bearer token
+    C->>S: Subsequent requests: `Authorization: Bearer <access_token>`
+    S->>B: get_user(access_token) — validate token (stateless)
+    B-->>S: valid user
+    S-->>C: protected resource response

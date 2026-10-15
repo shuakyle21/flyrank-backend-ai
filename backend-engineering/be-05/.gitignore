@@ -1,0 +1,24 @@
+.DS_Store
+.venv/
+.idea/
+.claude/
+
+## cache folder
+scraper/cache/
+scraper/output/*
+!scraper/output/books.json
+
+## python artifacts
+__pycache__/
+*.pyc
+
+## non commit files
+TODO.md
+scraper/src/stage1-fetch-cache.mmd
+scraper/src/stage2-discover-pages.mmd
+
+# runtime data (regenerated on every run)
+data/
+
+# assignment scaffolding (kept in history, not in the tree)
+*.pdf

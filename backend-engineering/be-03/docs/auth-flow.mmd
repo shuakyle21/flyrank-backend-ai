@@ -1,0 +1,12 @@
+flowchart TD
+    A[Client sends request] --> B{Has Authorization header?}
+    B -- No --> C[Return 401 Access token required]
+    B -- Yes --> D[Extract Bearer token]
+    D --> E{Token valid?}
+    E -- No --> F[Return 401 Invalid or expired access token]
+    E -- Yes --> G{Endpoint}
+    G -- Protected --> H[Allow access to protected route]
+    H --> I[Return protected profile data]
+    G -- Logout --> J[Call sign_out token on Supabase]
+    J --> K[Return 200 Logged out]
+    N[Note: Stateless verification — token is validated directly, no server session]
