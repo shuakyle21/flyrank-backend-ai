@@ -1,0 +1,7 @@
+.env
+.venv
+pyproject.toml
+uv.lock
+.idea
+http-client.private.env.json
+test_main.http
