@@ -1,0 +1,9 @@
+flowchart TD
+    A["POST /classify"] --> B["FastAPI parses body into JobEmail<br/>(validation runs before your function)"]
+    B -->|"wrong type, missing field,<br/>raw_text over 4000, extra key"| C["RequestValidationError"]
+    C --> D["Handler returns 400<br/>names the field"]
+    B -->|valid| E{"LLM_STUB == '1'?"}
+    E -->|yes| F["Return stub Classification<br/>zero model calls"]
+    E -->|no| G["503 'not wired yet'<br/>(until Stage 2)"]
+    F --> H["200 JSON, schema-shaped"]
+    D --> I["Zero model calls, zero cost"]

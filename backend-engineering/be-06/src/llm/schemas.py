@@ -1,3 +1,4 @@
+import os
 from enum import StrEnum
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -31,4 +32,4 @@ class Classification(BaseModel):
     status: Status | None
     company: str | None
     job_title: str | None
-    max_stage: int = Field(ge=1, le=5)
+    max_stage: int = Field(ge=1, le=4)
