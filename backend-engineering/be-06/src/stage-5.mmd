@@ -1,0 +1,7 @@
+flowchart TD
+    A["evals/cases.json<br/>8 hand-labelled cases"] --> B["evals/run script<br/>posts each case to /classify"]
+    B --> C["Compare status to expected"]
+    C --> D["Score x/8 and percent<br/>list the failures"]
+    D --> E["README: score, date,<br/>prompt version, cost per call"]
+    E --> F["Public repo<br/>check .env not in history"]
+    F --> G["Stranger clones, adds key,<br/>one command, valid response under 5 min"]

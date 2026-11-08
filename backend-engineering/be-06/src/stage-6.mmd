@@ -1,0 +1,7 @@
+flowchart TD
+    A["Bonus: write the spec from memory<br/>endpoint, schema, prompt, retries, kill switch"] --> B["Generate in ai-version/<br/>separate folder or branch"]
+    B --> C["Run the assignment checkpoints<br/>and the 8-case eval"]
+    C --> D["git diff --no-index src/ ai-version/src/"]
+    D --> E["README: AI vs me section<br/>3 named differences"]
+    E --> F["Check the three traps:<br/>10-min default timeout, raw text returned,<br/>retry on 401"]
+    F --> G["One rematch with an improved prompt<br/>one sentence on what changed"]

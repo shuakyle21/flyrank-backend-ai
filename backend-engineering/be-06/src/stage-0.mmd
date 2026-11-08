@@ -1,0 +1,7 @@
+flowchart TD
+    A["Write JOB-CARD.md<br/>input, output, must-never"] --> B["Hello script<br/>reads LLM_BASE_URL / KEY / MODEL"]
+    C[".env (git-ignored)<br/>.env.example (committed, names only)"] --> B
+    B --> D{"prints 'ready'?"}
+    D -->|yes| E["Checkpoint: git status does not list .env<br/>Commit Stage 0"]
+    D -->|no| F["Check base URL, key, model<br/>(OpenRouter: privacy switches on)"]
+    F --> B

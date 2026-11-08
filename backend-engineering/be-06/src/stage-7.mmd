@@ -1,0 +1,6 @@
+flowchart TD
+    A["Stretch: grow eval to 25 cases<br/>easy and hard, scored separately"] --> B["Change one prompt line<br/>report the movement"]
+    C["Provider behind complete(prompt, input)<br/>two implementations"] --> D["Route does not change"]
+    E["Prompt injection:<br/>2+ OWASP mitigations, 5 attack cases"] --> F["Which attack still got through?"]
+    G["Count tokens before sending<br/>reject over the limit"] --> H["Cost per 1,000 requests<br/>input, output or retries?"]
+    I["Extras: cache keyed on input + prompt version,<br/>streaming, response_format"] --> J["One README line each<br/>on the trade-off"]

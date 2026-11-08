@@ -1,0 +1,10 @@
+flowchart TD
+    A["Raw model text"] --> B["Strip code fence<br/>find the JSON object"]
+    B --> C["Classification.model_validate_json"]
+    C -->|valid| D["Return Classification"]
+    C -->|invalid| E["Repair: resend prompt +<br/>broken output + exact error"]
+    E --> F["Parse + validate again"]
+    F -->|valid| D
+    F -->|invalid| G["Append to logs/quarantine.jsonl<br/>input, error, raw, prompt version"]
+    G --> H["422 readable message<br/>raw text never returned"]
+    B -->|no JSON found| E

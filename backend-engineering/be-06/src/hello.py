@@ -1,12 +1,27 @@
-import os
+from http.client import responses
+
 from openai import OpenAI
+from openai.types.shared_params import ResponseFormatJSONObject
+from openai.types.chat import ChatCompletionUserMessageParam
 
-client = OpenAI(base_url=os.environ["LLM_BASE_URL"], api_key=os.environ["LLM_API_KEY"])
+from src.llm.config import get_settings
+cfg = get_settings()
 
-max_length=4000
+client = OpenAI(
+    base_url=str(cfg.llm_base_url),
+    api_key=cfg.llm_api_key,
+)
+
+messages: list[ChatCompletionUserMessageParam] = [
+    {"role": "user", "content": "Reply with exactly the word: ready"}
+]
+response_format: ResponseFormatJSONObject = {"type":"json_object"}
 
 res = client.chat.completions.create(
-    model=os.environ["LLM_MODEL"],
-    messages=[{"role": "user", "content": "Reply with exactly the word: ready"}],
+    model=cfg.llm_model,
+    messages=messages,
+    temperature=0,
+    response_format = response_format,
+    extra_body={"provider": {"require_parameters": True}}
 )
 print(res.choices[0].message.content)

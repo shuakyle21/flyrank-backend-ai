@@ -1,0 +1,7 @@
+flowchart TD
+    A["prompts/job-email-v1.md<br/>versioned file, not in the route"] --> B["System message<br/>role, exact shape, rules,<br/>when unsure, examples"]
+    C["JobEmail<br/>JSON-encoded"] --> D["User message<br/>the data only"]
+    B --> E["chat.completions.create<br/>temperature 0 or 0.2"]
+    D --> E
+    E --> F["Raw text returned<br/>not validated yet"]
+    F --> G["Checkpoint: 3 real emails answered<br/>prompt file committed"]

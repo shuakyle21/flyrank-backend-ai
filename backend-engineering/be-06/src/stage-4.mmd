@@ -1,0 +1,13 @@
+flowchart TD
+    A["Request arrives"] --> K{"LLM_ENABLED == 'false'?"}
+    K -->|yes| L["503 fallback<br/>zero model calls"]
+    K -->|no| B["Model call<br/>timeout 30 s, max_retries 0"]
+    B -->|success| S["Log: prompt version, model,<br/>tokens in/out, ms, repaired"]
+    S --> R["200 Classification"]
+    B -->|timeout| T{"attempts left?"}
+    B -->|"429 / 5xx"| T
+    B -->|"400 / 401 / 403"| X["Fail now, no retry<br/>log the error"]
+    T -->|yes| W["Wait: 1 s, 2 s, 4 s<br/>plus jitter; Retry-After on 429"]
+    W --> B
+    T -->|no, timeout| TO["504"]
+    T -->|no, 429 / 5xx| BG["502"]
